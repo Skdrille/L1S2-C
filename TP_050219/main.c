@@ -46,9 +46,9 @@ void afficher_polynome(TPolynome poly, int degre_max)
     }
 }
 
-int calculer_polynome(TPolynome poly, int degre_max, float x)
+float calculer_polynome(TPolynome poly, int degre_max, float x)
 {
-    int result = 0;
+    float result = 0;
 
     for(int i = 1; i <= degre_max; i++)
     {
@@ -79,7 +79,7 @@ int main()
     printf("Entrez la valeur de X a calculer : ");
     scanf("%f", &x);
 
-    printf("Pour X = %f, resultat = %d", x, calculer_polynome(poly, 4, x));
+    printf("Pour X = %f, resultat = %f", x, calculer_polynome(poly, 4, x));
 
     return 0;
 }
