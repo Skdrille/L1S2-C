@@ -14,15 +14,11 @@
 
 typedef int TPolynome[50];
 TPolynome poly1, poly2;
-const int DEGRE_MAX = 5;
+int DEGRE_MAX;
 
 void saisie_polynome(TPolynome poly, int degre_max)
 {
     int coef;
-    /*
-
-    On commence au degré 1 et pas 0 (comme écrit dans le sujet) pour pourvoir saisir directement la constante a la fin du polynôme
-    */
     int degre = 0;
 
     do
@@ -57,11 +53,16 @@ void afficher_polynome(TPolynome poly, int derivee)
     }
 }
 
-float calculer_polynome(TPolynome poly, int degre_max, float x)
+void calculer_polynome(TPolynome poly)
 {
+    float x;
+
+    printf("\nEntrez une valeur de x a calculer : ");
+    scanf("%f", &x);
+
     float result = 0;
 
-    for (int i = 0; i <= degre_max; i++)
+    for (int i = 0; i <= DEGRE_MAX; i++)
     {
         int coef = poly[i];
         if (i == 0)
@@ -70,7 +71,7 @@ float calculer_polynome(TPolynome poly, int degre_max, float x)
             result += coef * pow(x, i);
     }
 
-    return result;
+    printf("Resultat : %.2f", result);
 }
 
 void somme_formelle_polynomes(TPolynome poly1, TPolynome poly2)
@@ -100,6 +101,22 @@ void derivee_formelle_polynome(TPolynome poly)
 
 void produit_polynomes(TPolynome poly1, TPolynome poly2)
 {
+    TPolynome result_poly;
+    int result;
+
+    for(int i = 0; i <= DEGRE_MAX; i++)
+    {
+        result = 0;
+
+        for(int j = 0; j <= DEGRE_MAX; j++)
+        {
+            result += poly1[i] * poly2[j];
+        }
+
+        result_poly[i] = result;
+    }
+
+    afficher_polynome(result_poly, 0);
 }
 
 int demander_degre_max()
@@ -112,6 +129,16 @@ int demander_degre_max()
     return degre_max;
 }
 
+float demander_x()
+{
+    float x;
+
+    printf("Entrez une valeur de X a calculer : ");
+    scanf("%f", &x);
+
+    return x;
+}
+
 int  afficher_menu_principal()
 {
     printf("\n\n\n");
@@ -120,6 +147,7 @@ int  afficher_menu_principal()
     printf("<3> - Calculer le produit P = A * B\n");
     printf("<4> - Calculer la derivee D = P'\n");
     printf("<5> - Afficher un polynome\n");
+    printf("<6> - Calculer une image\n");
     printf("<0> - Quitter le programme\n");
 
     int user_choice;
@@ -164,7 +192,7 @@ int  afficher_menu_principal()
 
     case 3:
 
-        printf("Fonctionnalite en cours de dev");
+        produit_polynomes(poly1, poly2);
         afficher_menu_principal();
         break;
 
@@ -189,14 +217,34 @@ int  afficher_menu_principal()
                 printf("Veuillez choisir un polynome correct !");
                 break;
         }
-        afficher_menu_principal();
-        break;
 
     case 5:
         menu_afficher_polynome();
         break;
+
+    case 6:
+        printf("<1> Polynome 1 \n<2> Polynome 2\n");
+        scanf("%d", &user_choice);
+
+        switch(user_choice)
+        {
+            case 1:
+                calculer_polynome(poly1);
+                break;
+
+            case 2:
+                calculer_polynome(poly2);
+                break;
+
+            default:
+                printf("Veuillez appuyer sur une touche correcte !\n");
+                break;
+            }
+
+        break;
     }
 
+    afficher_menu_principal();
     return 0;
 }
 
@@ -264,13 +312,13 @@ void menu_afficher_polynome()
             break;
 
         case 0: //Retour au menu principal
-
-            menu_afficher_polynome();
+            return;
             break;
     }
 }
 
 int main()
 {
+    DEGRE_MAX = demander_degre_max();
     return afficher_menu_principal();   
 }
