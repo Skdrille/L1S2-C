@@ -1,174 +1,140 @@
-#include<stdlib.h>
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-typedef int MATRICE[50][50];
-
-int demander_nb_lignes()
+typedef struct
 {
-    int lignes;
+    int ligns, columns, content[50][50];
+} Matrix;
+
+/*
+Define a matrix and fill it
+*/
+Matrix build_matrix()
+{
+    Matrix mat;
+
     printf("Entrez le nombre de lignes : ");
-    scanf("%d", &lignes);
+    scanf("%d", &mat.ligns);
 
-    return lignes;
-}
-
-int demander_nb_colonnes()
-{
-    int colonnes;
     printf("Entrez le nombre de colonnes : ");
-    scanf("%d", &colonnes);
+    scanf("%d", &mat.columns);
 
-    return colonnes;
-}
-
-void saisir_matrice(MATRICE mat, int lignes, int colonnes)
-{
-    for(int i = 0; i < lignes; i++)
+    //Fill the matrix
+    for (int i = 0; i < mat.ligns; i++)
     {
-        for(int j = 0; j < colonnes; j++)
+        for (int j = 0; j < mat.columns; j++)
         {
-            int valeur;
-
-            printf("\n[%d][%d] = ", i, j);
-            scanf("%d", &valeur);
-
-            mat[i][j] = valeur;
+            printf("[%d][%d] = ", i, j);
+            scanf("%d", &mat.content[i][j]);
         }
     }
+
+    return mat;
 }
 
-void afficher_matrice(MATRICE mat, int lignes, int colonnes)
+/*
+Make a copy of a matrix with the same ligns and columns
+*/
+Matrix emptyCopyOf(Matrix mat)
 {
-    if(colonnes < 20)
+    Matrix copy;
+    copy.ligns = mat.ligns;
+    copy.columns = mat.columns;
+
+    return copy;
+}
+
+int sameSize(Matrix mat1, Matrix mat2)
+{
+    return (mat1.ligns == mat2.ligns && mat1.columns == mat2.columns);
+}
+
+/*
+Display the coefficients of a matrix
+*/
+void displayMatrix(Matrix mat)
+{
+    int ligns = mat.ligns;
+    int columns = mat.columns;
+
+    if (columns < 20)
     {
-        for(int i = 0; i < lignes; i++)
+        for (int i = 0; i < ligns; i++)
         {
             printf("[");
-            for(int j = 0; j < colonnes; j++)
+            for (int j = 0; j < columns; j++)
             {
-                printf(" %d ", mat[i][j]);
+                printf(" %d ", mat.content[i][j]);
             }
             printf("]\n");
         }
-    }else
+    }
+    else
     {
-        for(int i = 0; i < lignes; i++)
+        for (int i = 0; i < ligns; i++)
         {
-            for(int j = 0; j < colonnes; j++)
+            for (int j = 0; j < columns; j++)
             {
-                printf("M[%d][%d] = %d\n", i, j, mat[i][j]);
+                printf("M[%d][%d] = %d\n", i, j, mat.content[i][j]);
             }
         }
     }
-    
 }
 
-void zeros_diagonale_matrice_carree(MATRICE mat, int lignes, int colonnes)
+/*
+Get the transpose of a matrix 
+*/
+Matrix getTransposeMatrix(Matrix mat)
 {
-    if(lignes == colonnes)
+    Matrix transpose = emptyCopyOf(mat);
+
+    for (int i = 0; i < transpose.ligns; i++)
     {
-        for(int i = 0; i < lignes; i++)
+        for (int j = 0; j < transpose.columns; j++)
         {
-            for(int j = 0; j < colonnes; j++)
+            transpose.content[j][i] = mat.content[i][j];
+        }
+    }
+
+    return transpose;
+}
+
+/*
+Multiply a matrix with a coefficient
+*/
+Matrix getMultipliedMatrix(Matrix mat, int coefficient)
+{
+    Matrix result = emptyCopyOf(mat);
+
+    for (int i = 0; i < result.ligns; i++)
+    {
+        for (int j = 0; j < result.columns; j++)
+        {
+            result.content[i][j] = mat.content[i][j] * coefficient;
+        }
+    }
+
+    return result;
+}
+
+Matrix sumMatrices(Matrix mat1, Matrix mat2)
+{
+    if (sameSize(mat1, mat2)) //If both matrices have the same size
+    {
+        Matrix result = emptyCopyOf(mat1);
+
+        for (int i = 0; i < result.ligns; i++)
+        {
+            for (int j = 0; j < result.columns; j++)
             {
-                if(i == j) mat[i][j] = 0; //Si i = j on est sur la diagonale
+                result.content[i][j] = mat1.content[i][j] + mat2.content[i][j];
             }
         }
-    }else
-    {
-        printf("La matrice n'est pas carree.");
     }
-    
-}
-
-void afficher_transposee_matrice(MATRICE mat, int lignes, int colonnes)
-{
-    MATRICE transposee;
-
-    for(int i = 0; i < lignes; i++)
-    {
-        for(int j = 0; j < colonnes; j++)
-        {
-            transposee[j][i] = mat[i][j];
-        }
-    }
-
-    afficher_matrice(transposee, lignes, colonnes);
-}
-
-void afficher_produit_matrice(MATRICE mat, int lignes, int colonnes, int multiplicateur)
-{
-    MATRICE result;
-
-    for(int i = 0; i < lignes; i++)
-    {
-        for(int j = 0; j < colonnes; j++)
-        {
-            result[i][j] = mat[i][j] * multiplicateur;
-        }
-    }
-
-    afficher_matrice(result, lignes, colonnes);
-}
-
-void afficher_somme_matrices(MATRICE mat1, MATRICE mat2, int l1, int c1, int l2, int c2)
-{
-    MATRICE result;
-
-    if(l1 == l2 && c1 == c2)
-    {
-        for(int i = 0; i < l1; i++)
-        {
-            for(int j = 0; j < c1; j++)
-            {
-                result[i][j] = mat1[i][j] + mat2[i][j];
-            }
-        }
-        afficher_matrice(result, l1, c1);
-    }else
-    {
-        printf("Les deux matrices ne sont pas de meme taille !");
-    }
-    
-}
-
-void afficher_produit_matrice_matrice(MATRICE mat1, MATRICE mat2, int l1, int c1, int l2, int c2)
-{
-
 }
 
 int main()
 {
-    MATRICE mat1;
-    int lignes = demander_nb_lignes();
-    int colonnes = demander_nb_colonnes();
-
-    saisir_matrice(mat1, lignes, colonnes);
-
-    MATRICE mat2;
-    int l2 = demander_nb_lignes();
-    int c2 = demander_nb_colonnes();
-
-    saisir_matrice(mat2, l2, c2);
-
-    //Affichage des deux matrices
-    afficher_matrice(mat1, lignes, colonnes);
-
-    printf("\n");
-
-    afficher_matrice(mat2, l2, c2);
-
-    //Affichage transposée
-    printf("\nTransposee A :\n");
-    afficher_transposee_matrice(mat1, lignes, colonnes);
-
-
-    //Affichage somme
-    printf("\nSomme A et B :\n");
-    afficher_somme_matrices(mat1, mat2, lignes, colonnes, l2, c2);
-
-    //Affichage produit
-    printf("\nProduit de A par 3 :\n");
-    afficher_produit_matrice(mat1, lignes, colonnes, 3);
-
+    Matrix mat1 = build_matrix();
+    displayMatrix(getMultipliedMatrix(mat1, 4));
 }

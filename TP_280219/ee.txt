@@ -1,0 +1,73 @@
+void zeros_diagonale_matrice_carree(MATRICE mat, int ligns, int columns)
+{
+    if (ligns == columns)
+    {
+        for (int i = 0; i < ligns; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                if (i == j)
+                    mat[i][j] = 0; //Si i = j on est sur la diagonale
+            }
+        }
+    }
+    else
+    {
+        printf("La matrice n'est pas carree.");
+    }
+}
+
+void afficher_transposee_matrice(MATRICE mat, int ligns, int columns)
+{
+    MATRICE transposee;
+
+    for (int i = 0; i < ligns; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            transposee[j][i] = mat[i][j];
+        }
+    }
+
+    afficher_matrice(transposee, ligns, columns);
+}
+
+void afficher_produit_matrice(MATRICE mat, int ligns, int columns, int multiplicateur)
+{
+    MATRICE result;
+
+    for (int i = 0; i < ligns; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            result[i][j] = mat[i][j] * multiplicateur;
+        }
+    }
+
+    afficher_matrice(result, ligns, columns);
+}
+
+void afficher_somme_matrices(MATRICE mat1, MATRICE mat2, int l1, int c1, int l2, int c2)
+{
+    MATRICE result;
+
+    if (l1 == l2 && c1 == c2)
+    {
+        for (int i = 0; i < l1; i++)
+        {
+            for (int j = 0; j < c1; j++)
+            {
+                result[i][j] = mat1[i][j] + mat2[i][j];
+            }
+        }
+        afficher_matrice(result, l1, c1);
+    }
+    else
+    {
+        printf("Les deux matrices ne sont pas de meme taille !");
+    }
+}
+
+void afficher_produit_matrice_matrice(MATRICE mat1, MATRICE mat2, int l1, int c1, int l2, int c2)
+{
+}
