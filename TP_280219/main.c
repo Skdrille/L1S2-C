@@ -65,8 +65,13 @@ Matrix clearMatrix(Matrix mat)
             mat.coef[i][j] = 0;
         }
     }
+
+    return mat;
 }
 
+/*
+THIS FUNCTION DOESN'T WORK 
+*/
 Matrix clearMatrixDiagonale(Matrix mat)
 {
     for (int i = 0; i < mat.ligns; i++)
@@ -77,6 +82,8 @@ Matrix clearMatrixDiagonale(Matrix mat)
                 mat.coef[i][j] = 0;
         }
     }
+
+    return mat;
 }
 
 /*
@@ -114,7 +121,7 @@ void displayMatrix(Matrix mat)
 /*
 Get the transpose of a matrix 
 */
-Matrix getTransposeMatrix(Matrix mat)
+void displayTransposeMatrix(Matrix mat)
 {
     Matrix transpose = emptyCopyOf(mat);
 
@@ -126,7 +133,7 @@ Matrix getTransposeMatrix(Matrix mat)
         }
     }
 
-    return transpose;
+    displayMatrix(transpose);
 }
 
 /*
@@ -163,6 +170,8 @@ Matrix sumMatrices(Matrix mat1, Matrix mat2)
                 result.coef[i][j] = mat1.coef[i][j] + mat2.coef[i][j];
             }
         }
+
+        return result;
     }
 }
 
@@ -208,6 +217,9 @@ void displayMainMenu()
 
     switch (userChoice)
     {
+    case 0:
+        exit(0);
+        break;
     case 1:
         buildMatrixMenu();
         break;
@@ -220,6 +232,7 @@ void displayMainMenu()
     case 4:
         C = sumMatrices(A, B);
         displayMatrix(C);
+        displayMainMenu();
         break;
     case 5:
         printf("A finir");
@@ -255,13 +268,13 @@ void buildMatrixMenu()
         B = buildMatrix();
         break;
     case 3:
-        clearMatrix(A);
+        A = clearMatrix(A);
         break;
     case 4:
-        clearMatrix(B);
+        B = clearMatrix(B);
         break;
     case 5:
-        clearMatrix(C);
+        C = clearMatrix(C);
         break;
     default:
         buildMatrixMenu();
@@ -286,13 +299,13 @@ void clearMatrixDiagonalMenu()
         displayMainMenu();
         break;
     case 1:
-        clearMatrixDiagonale(A);
+        A = clearMatrixDiagonale(A);
         break;
     case 2:
-        clearMatrixDiagonale(B);
+        B = clearMatrixDiagonale(B);
         break;
     case 3:
-        clearMatrixDiagonale(C);
+        C = clearMatrixDiagonale(C);
         break;
     default:
         clearMatrixDiagonalMenu();
@@ -304,12 +317,12 @@ void clearMatrixDiagonalMenu()
 
 void transposeeMatrixMenu()
 {
-    int userChoice = askUserChoice();
-
     printf("\n<1> Calculer la transposee de A\n");
     printf("<2> Calculer la transposee de B\n");
     printf("<3> Calculer la transposee de C\n");
     printf("<0> Quitter le calcul des transposees\n");
+
+    int userChoice = askUserChoice();
 
     switch (userChoice)
     {
@@ -317,13 +330,13 @@ void transposeeMatrixMenu()
         displayMainMenu();
         break;
     case 1:
-        displayMatrix(getTransposeMatrix(A));
+        displayTransposeMatrix(A);
         break;
     case 2:
-        displayMatrix(getTransposeMatrix(B));
+        displayTransposeMatrix(B);
         break;
     case 3:
-        displayMatrix(getTransposeMatrix(C));
+        displayTransposeMatrix(C);
         break;
     default:
         transposeeMatrixMenu();
@@ -367,4 +380,5 @@ void displayMatrixMenu()
 int main()
 {
     displayMainMenu();
+    return 0;
 }
