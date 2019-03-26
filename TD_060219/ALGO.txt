@@ -1,0 +1,11 @@
+TYPE MATRICE = Tableau[][] de Reel
+
+PROCEDURE transposer_matrice(mat: MATRICE, taille: Entier)
+    VAR i,j : Entier;
+    début
+        Pour i de 1 à taille faire
+            Pour j de 1 à taille faire
+                mat[j][i] <- mat[i][j];
+            Fin Pour
+        Fin Pour
+    Fin

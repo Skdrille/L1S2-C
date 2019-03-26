@@ -12,7 +12,7 @@
 
 */
 
-typedef int TPolynome[50];
+typedef int TPolynome[15];
 TPolynome poly1, poly2;
 int DEGRE_MAX;
 

@@ -1,31 +1,31 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-typedef int MATRICE[50][50];
+typedef int MATRICE[15][15];
 
-int demander_nb_lignes()
+int demander_nb_ligns()
 {
-    int lignes;
-    printf("Entrez le nombre de lignes : ");
-    scanf("%d", &lignes);
+    int ligns;
+    printf("Entrez le nombre de ligns : ");
+    scanf("%d", &ligns);
 
-    return lignes;
+    return ligns;
 }
 
-int demander_nb_colonnes()
+int demander_nb_columns()
 {
-    int colonnes;
-    printf("Entrez le nombre de colonnes : ");
-    scanf("%d", &colonnes);
+    int columns;
+    printf("Entrez le nombre de columns : ");
+    scanf("%d", &columns);
 
-    return colonnes;
+    return columns;
 }
 
-void saisir_matrice(MATRICE mat, int lignes, int colonnes)
+void saisir_matrice(MATRICE mat, int ligns, int columns)
 {
-    for(int i = 0; i < lignes; i++)
+    for(int i = 0; i < ligns; i++)
     {
-        for(int j = 0; j < colonnes; j++)
+        for(int j = 0; j < columns; j++)
         {
             int valeur;
 
@@ -37,14 +37,14 @@ void saisir_matrice(MATRICE mat, int lignes, int colonnes)
     }
 }
 
-void afficher_matrice(MATRICE mat, int lignes, int colonnes)
+void afficher_matrice(MATRICE mat, int ligns, int columns)
 {
-    if(colonnes < 20)
+    if(columns < 20)
     {
-        for(int i = 0; i < lignes; i++)
+        for(int i = 0; i < ligns; i++)
         {
             printf("[");
-            for(int j = 0; j < colonnes; j++)
+            for(int j = 0; j < columns; j++)
             {
                 printf(" %d ", mat[i][j]);
             }
@@ -52,9 +52,9 @@ void afficher_matrice(MATRICE mat, int lignes, int colonnes)
         }
     }else
     {
-        for(int i = 0; i < lignes; i++)
+        for(int i = 0; i < ligns; i++)
         {
-            for(int j = 0; j < colonnes; j++)
+            for(int j = 0; j < columns; j++)
             {
                 printf("M[%d][%d] = %d\n", i, j, mat[i][j]);
             }
@@ -63,13 +63,13 @@ void afficher_matrice(MATRICE mat, int lignes, int colonnes)
     
 }
 
-void zeros_diagonale_matrice_carree(MATRICE mat, int lignes, int colonnes)
+void zeros_diagonale_matrice_carree(MATRICE mat, int ligns, int columns)
 {
-    if(lignes == colonnes)
+    if(ligns == columns)
     {
-        for(int i = 0; i < lignes; i++)
+        for(int i = 0; i < ligns; i++)
         {
-            for(int j = 0; j < colonnes; j++)
+            for(int j = 0; j < columns; j++)
             {
                 if(i == j) mat[i][j] = 0; //Si i = j on est sur la diagonale
             }
@@ -81,34 +81,34 @@ void zeros_diagonale_matrice_carree(MATRICE mat, int lignes, int colonnes)
     
 }
 
-void afficher_transposee_matrice(MATRICE mat, int lignes, int colonnes)
+void afficher_transposee_matrice(MATRICE mat, int ligns, int columns)
 {
     MATRICE transposee;
 
-    for(int i = 0; i < lignes; i++)
+    for(int i = 0; i < ligns; i++)
     {
-        for(int j = 0; j < colonnes; j++)
+        for(int j = 0; j < columns; j++)
         {
             transposee[j][i] = mat[i][j];
         }
     }
 
-    afficher_matrice(transposee, lignes, colonnes);
+    afficher_matrice(transposee, ligns, columns);
 }
 
-void afficher_produit_matrice(MATRICE mat, int lignes, int colonnes, int multiplicateur)
+void afficher_produit_matrice(MATRICE mat, int ligns, int columns, int multiplicateur)
 {
     MATRICE result;
 
-    for(int i = 0; i < lignes; i++)
+    for(int i = 0; i < ligns; i++)
     {
-        for(int j = 0; j < colonnes; j++)
+        for(int j = 0; j < columns; j++)
         {
             result[i][j] = mat[i][j] * multiplicateur;
         }
     }
 
-    afficher_matrice(result, lignes, colonnes);
+    afficher_matrice(result, ligns, columns);
 }
 
 void afficher_somme_matrices(MATRICE mat1, MATRICE mat2, int l1, int c1, int l2, int c2)
@@ -140,19 +140,19 @@ void afficher_produit_matrice_matrice(MATRICE mat1, MATRICE mat2, int l1, int c1
 int main()
 {
     MATRICE mat1;
-    int lignes = demander_nb_lignes();
-    int colonnes = demander_nb_colonnes();
+    int ligns = demander_nb_ligns();
+    int columns = demander_nb_columns();
 
-    saisir_matrice(mat1, lignes, colonnes);
+    saisir_matrice(mat1, ligns, columns);
 
     MATRICE mat2;
-    int l2 = demander_nb_lignes();
-    int c2 = demander_nb_colonnes();
+    int l2 = demander_nb_ligns();
+    int c2 = demander_nb_columns();
 
     saisir_matrice(mat2, l2, c2);
 
     //Affichage des deux matrices
-    afficher_matrice(mat1, lignes, colonnes);
+    afficher_matrice(mat1, ligns, columns);
 
     printf("\n");
 
@@ -160,15 +160,15 @@ int main()
 
     //Affichage transposée
     printf("\nTransposee A :\n");
-    afficher_transposee_matrice(mat1, lignes, colonnes);
+    afficher_transposee_matrice(mat1, ligns, columns);
 
 
     //Affichage somme
     printf("\nSomme A et B :\n");
-    afficher_somme_matrices(mat1, mat2, lignes, colonnes, l2, c2);
+    afficher_somme_matrices(mat1, mat2, ligns, columns, l2, c2);
 
     //Affichage produit
     printf("\nProduit de A par 3 :\n");
-    afficher_produit_matrice(mat1, lignes, colonnes, 3);
+    afficher_produit_matrice(mat1, ligns, columns, 3);
 
 }
