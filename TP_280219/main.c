@@ -1,6 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*
+
+J'ai préféré créer une structure pour les matrices afin ne pas avoir à inclure le nombre de lignes et colonnes dans les paramètres de chaque fonction
+
+*/
 typedef struct
 {
     int ligns, columns, coef[50][50];
@@ -21,14 +26,12 @@ Matrix buildMatrix()
     printf("Entrez le nombre de colonnes : ");
     scanf("%d", &mat.columns);
 
-    printf("\nEntrez les coefficients de la matrice : ");
-
     //Fill the matrix
     for (int i = 0; i < mat.ligns; i++)
     {
         for (int j = 0; j < mat.columns; j++)
         {
-            printf("[%d][%d] = ", i, j);
+            printf("Coefficient [%d][%d] = ", i, j);
             scanf("%d", &mat.coef[i][j]);
         }
     }
@@ -70,7 +73,7 @@ Matrix clearMatrix(Matrix mat)
 }
 
 /*
-THIS FUNCTION DOESN'T WORK 
+Set the matrix's diagonal coefficients to 0
 */
 Matrix clearMatrixDiagonale(Matrix mat)
 {
@@ -175,23 +178,33 @@ Matrix sumMatrices(Matrix mat1, Matrix mat2)
     }
 }
 
+/*
+Get the product of a matrix by a matrix
+*/
 Matrix getMultipliedMatrixByMatrix(Matrix mat1, Matrix mat2)
 {
-    Matrix result;
+    Matrix result = emptyCopyOf(mat1);
 
     if (mat1.columns == mat2.ligns)
     {
-        int product = 0;
-
-        for (int i = 0; i < mat1.ligns; i++)
+        for (int i = 0; i < mat1.columns; i++)
         {
-            for (int j = 0; j < mat2.columns; j++)
+            for (int j = 0; j < mat2.ligns; j++)
             {
+                for (int k = 0; k < mat2.ligns; k++)
+                {
+                    result.coef[i][j] += mat1.coef[i][k] * mat2.coef[k][j];
+                }
             }
         }
+
+        return result;
     }
 }
 
+/*
+get user input
+*/
 int askUserChoice()
 {
     int userChoice;
@@ -235,7 +248,9 @@ void displayMainMenu()
         displayMainMenu();
         break;
     case 5:
-        printf("A finir");
+        C = getMultipliedMatrixByMatrix(A, B);
+        displayMatrix(C);
+        displayMainMenu();
     case 6:
         displayMatrixMenu();
         break;

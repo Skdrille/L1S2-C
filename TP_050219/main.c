@@ -104,11 +104,11 @@ void produit_polynomes(TPolynome poly1, TPolynome poly2)
     TPolynome result_poly;
     int result;
 
-    for(int i = 0; i <= DEGRE_MAX; i++)
+    for (int i = 0; i <= DEGRE_MAX; i++)
     {
         result = 0;
 
-        for(int j = 0; j <= DEGRE_MAX; j++)
+        for (int j = 0; j <= DEGRE_MAX; j++)
         {
             result += poly1[i] * poly2[j];
         }
@@ -139,7 +139,7 @@ float demander_x()
     return x;
 }
 
-int  afficher_menu_principal()
+int afficher_menu_principal()
 {
     printf("\n\n\n");
     printf("<1> - Saisir un polynome\n");
@@ -155,31 +155,31 @@ int  afficher_menu_principal()
 
     switch (user_choice)
     {
-        case 0: //Fin du programme
+    case 0: //Fin du programme
+        break;
+
+    case 1:
+
+        /* On demande quel polynome l'utilisateur souhaite saisir */
+        printf("<1> Polynome 1 \n<2> Polynome 2\n");
+        scanf("%d", &user_choice);
+
+        switch (user_choice)
+        {
+        case 1:
+            saisie_polynome(poly1, DEGRE_MAX);
+            afficher_polynome(poly1, 0);
             break;
 
-        case 1:
+        case 2:
+            saisie_polynome(poly2, DEGRE_MAX);
+            afficher_polynome(poly2, 0);
+            break;
 
-            /* On demande quel polynome l'utilisateur souhaite saisir */
-            printf("<1> Polynome 1 \n<2> Polynome 2\n");
-            scanf("%d", &user_choice);
-
-            switch(user_choice)
-            {
-                case 1:
-                    saisie_polynome(poly1, DEGRE_MAX);
-                    afficher_polynome(poly1, 0);
-                    break;
-
-                case 2:
-                    saisie_polynome(poly2, DEGRE_MAX);
-                    afficher_polynome(poly2, 0);
-                    break;
-
-                default:
-                    printf("Veuillez appuyer sur une touche correcte !\n");
-                    break;
-            }
+        default:
+            printf("Veuillez appuyer sur une touche correcte !\n");
+            break;
+        }
 
         afficher_menu_principal();
         break;
@@ -201,21 +201,21 @@ int  afficher_menu_principal()
         printf("<1>Derivee polynome 1 \n<2>Derivee polynome 2\n");
         scanf("%d", &user_choice);
 
-        switch(user_choice)
+        switch (user_choice)
         {
-            case 1:
+        case 1:
 
-                derivee_formelle_polynome(poly1);
-                break;
-    
-            case 2:
+            derivee_formelle_polynome(poly1);
+            break;
 
-                derivee_formelle_polynome(poly2);
-                break;
-            
-            default:
-                printf("Veuillez choisir un polynome correct !");
-                break;
+        case 2:
+
+            derivee_formelle_polynome(poly2);
+            break;
+
+        default:
+            printf("Veuillez choisir un polynome correct !");
+            break;
         }
 
     case 5:
@@ -226,20 +226,20 @@ int  afficher_menu_principal()
         printf("<1> Polynome 1 \n<2> Polynome 2\n");
         scanf("%d", &user_choice);
 
-        switch(user_choice)
+        switch (user_choice)
         {
-            case 1:
-                calculer_polynome(poly1);
-                break;
+        case 1:
+            calculer_polynome(poly1);
+            break;
 
-            case 2:
-                calculer_polynome(poly2);
-                break;
+        case 2:
+            calculer_polynome(poly2);
+            break;
 
-            default:
-                printf("Veuillez appuyer sur une touche correcte !\n");
-                break;
-            }
+        default:
+            printf("Veuillez appuyer sur une touche correcte !\n");
+            break;
+        }
 
         break;
     }
@@ -263,62 +263,62 @@ void menu_afficher_polynome()
 
     switch (user_choice)
     {
+    case 1:
+
+        afficher_polynome(poly1, 0);
+        menu_afficher_polynome();
+        break;
+    case 2:
+
+        afficher_polynome(poly2, 0);
+        menu_afficher_polynome();
+        break;
+
+    case 3:
+
+        somme_formelle_polynomes(poly1, poly2);
+        menu_afficher_polynome();
+        break;
+
+    case 4:
+
+        printf("Fonctionnalite en cours de dev...");
+        menu_afficher_polynome();
+        break;
+
+    case 5:
+
+        printf("<1>Derivee polynome 1 \n<2>Derivee polynome 2\n");
+        scanf("%d", &user_choice);
+
+        switch (user_choice)
+        {
         case 1:
 
-            afficher_polynome(poly1, 0);
-            menu_afficher_polynome();
+            derivee_formelle_polynome(poly1);
             break;
+
         case 2:
 
-            afficher_polynome(poly2, 0);
-            menu_afficher_polynome();
+            derivee_formelle_polynome(poly2);
             break;
 
-        case 3:
+        default:
 
-            somme_formelle_polynomes(poly1, poly2);
-            menu_afficher_polynome();
+            printf("Veuillez choisir un polynome correct !");
             break;
-
-        case 4:
-
-            printf("Fonctionnalite en cours de dev...");
-            menu_afficher_polynome();
-            break;
-
-        case 5:
-
-            printf("<1>Derivee polynome 1 \n<2>Derivee polynome 2\n");
-            scanf("%d", &user_choice);
-
-            switch(user_choice)
-            {
-                case 1:
-
-                derivee_formelle_polynome(poly1);
-                break;
-    
-            case 2:
-
-                derivee_formelle_polynome(poly2);
-                break;
-            
-            default:
-
-                printf("Veuillez choisir un polynome correct !");
-                break;
         }
-            menu_afficher_polynome();
-            break;
+        menu_afficher_polynome();
+        break;
 
-        case 0: //Retour au menu principal
-            return;
-            break;
+    case 0: //Retour au menu principal
+        return;
+        break;
     }
 }
 
 int main()
 {
     DEGRE_MAX = demander_degre_max();
-    return afficher_menu_principal();   
+    return afficher_menu_principal();
 }
